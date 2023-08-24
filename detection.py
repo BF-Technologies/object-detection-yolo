@@ -22,7 +22,7 @@ classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "trai
               "teddy bear", "hair drier", "toothbrush"
               ]
 
-
+counter = 0
 while True:
     success, img = cap.read()
     results = model(img, stream=True)
@@ -55,8 +55,16 @@ while True:
             thickness = 2
 
             cv2.putText(img, classNames[cls], org, font, fontScale, color, thickness)
-
+    now = datetime.datetime.now()
+    current_datetime_string = now.strftime("%Y-%m-%d_%H-%M-%S")
+    filename = "savedImage_" + current_datetime_string + ".jpg"
+    # Using cv2.imwrite() method
+    # Saving the image
+    cv2.imwrite(filename, img)
     cv2.imshow('Webcam', img)
+    counter += 1
+    if counter >= 100:
+        break
     if cv2.waitKey(1) == ord('q'):
         break
 
